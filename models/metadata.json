@@ -1,0 +1,72 @@
+{
+  "threshold": 0.06585785552020904,
+  "risk_tier_edges": [
+    0.0,
+    0.04572018508605563,
+    0.13763436440445803,
+    0.2609935733159511,
+    1.0
+  ],
+  "risk_tier_labels": [
+    "Low",
+    "Moderate",
+    "High",
+    "Very High"
+  ],
+  "model_features": [
+    "age_years_mid",
+    "height",
+    "weight",
+    "waist_circumference",
+    "bmi",
+    "waist_to_height",
+    "wwi",
+    "systolic_bp",
+    "diastolic_bp",
+    "pulse_pressure",
+    "mean_arterial_pressure",
+    "urine_protein",
+    "sex_code",
+    "smoking_status",
+    "alcohol_consumption",
+    "hemoglobin",
+    "serum_creatinine",
+    "log_ast",
+    "log_alt",
+    "log_ggt",
+    "ast_alt_ratio",
+    "missing_hemoglobin",
+    "missing_serum_creatinine",
+    "missing_serum_got_ast",
+    "missing_serum_gpt_alt",
+    "missing_gamma_gtp",
+    "total_cholesterol",
+    "hdl_cholesterol",
+    "ldl_cholesterol",
+    "log_triglycerides",
+    "non_hdl_cholesterol",
+    "tg_hdl_ratio",
+    "tc_hdl_ratio",
+    "ldl_hdl_ratio",
+    "has_complete_lipid_panel",
+    "n_lipids_available",
+    "missing_total_cholesterol",
+    "missing_triglycerides",
+    "missing_hdl_cholesterol",
+    "missing_ldl_cholesterol"
+  ],
+  "nominal_features": [
+    "sex_code",
+    "smoking_status",
+    "alcohol_consumption"
+  ],
+  "cat_feature_indices": [
+    12,
+    13,
+    14
+  ],
+  "test_roc_auc": 0.8164069889176142,
+  "test_avg_precision": 0.2733682588829638,
+  "test_brier": 0.0643133946197861,
+  "best_iteration": 1324
+}

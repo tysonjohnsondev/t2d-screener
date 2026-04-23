@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T2D Risk Screener</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <div class="header-title">
+        <span class="header-icon">⚕</span>
+        <div>
+          <h1>T2D Risk Screener</h1>
+          <p class="header-sub">Undiagnosed Type 2 Diabetes · Korean NHIS Data</p>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <button class="nav-btn active" data-tab="screener">Screening Tool</button>
+        <button class="nav-btn" data-tab="about">About the Model</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Screener Tab ────────────────────────────────────────────────────── -->
+  <main id="tab-screener" class="tab-content active">
+    <div class="page-inner">
+
+      <div class="disclaimer banner-info">
+        <strong>Screening tool only.</strong>
+        This tool does not provide a diagnosis and is not a substitute for professional
+        medical advice. Results are based on statistical patterns in Korean population data
+        and are intended to support, not replace, clinical judgement.
+      </div>
+
+      <form id="screening-form" novalidate>
+
+        <!-- Section 1: Basic Information -->
+        <section class="form-section">
+          <h2 class="section-title">Basic Information</h2>
+          <div class="field-grid">
+
+            <div class="field">
+              <label for="age">Age <span class="unit">(years)</span></label>
+              <input type="number" id="age" name="age" min="20" max="90" placeholder="e.g. 45" required />
+            </div>
+
+            <div class="field">
+              <label for="sex_code">Sex</label>
+              <select id="sex_code" name="sex_code" required>
+                <option value="" disabled selected>Select…</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="smoking_status">Smoking status</label>
+              <select id="smoking_status" name="smoking_status" required>
+                <option value="" disabled selected>Select…</option>
+                <option value="1">Never smoked</option>
+                <option value="2">Former smoker</option>
+                <option value="3">Current smoker</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="alcohol_consumption">Alcohol consumption</label>
+              <select id="alcohol_consumption" name="alcohol_consumption" required>
+                <option value="" disabled selected>Select…</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 2: Body Measurements -->
+        <section class="form-section">
+          <h2 class="section-title">Body Measurements</h2>
+          <div class="field-grid">
+
+            <div class="field">
+              <label for="height_cm">Height <span class="unit">(cm)</span></label>
+              <input type="number" id="height_cm" name="height_cm" min="100" max="230"
+                     step="0.1" placeholder="e.g. 170" required />
+            </div>
+
+            <div class="field">
+              <label for="weight_kg">Weight <span class="unit">(kg)</span></label>
+              <input type="number" id="weight_kg" name="weight_kg" min="20" max="250"
+                     step="0.1" placeholder="e.g. 72" required />
+            </div>
+
+            <div class="field">
+              <label for="waist_cm">
+                Waist circumference <span class="unit">(cm)</span>
+                <span class="tooltip" title="Measure at the midpoint between the lowest rib and the top of the hip bone.">ⓘ</span>
+              </label>
+              <input type="number" id="waist_cm" name="waist_cm" min="30" max="250"
+                     step="0.1" placeholder="e.g. 84" required />
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 3: Blood Pressure -->
+        <section class="form-section">
+          <h2 class="section-title">Blood Pressure</h2>
+          <div class="field-grid">
+
+            <div class="field">
+              <label for="systolic_bp">Systolic <span class="unit">(mmHg)</span></label>
+              <input type="number" id="systolic_bp" name="systolic_bp" min="60" max="300"
+                     placeholder="e.g. 122" required />
+            </div>
+
+            <div class="field">
+              <label for="diastolic_bp">Diastolic <span class="unit">(mmHg)</span></label>
+              <input type="number" id="diastolic_bp" name="diastolic_bp" min="30" max="200"
+                     placeholder="e.g. 78" required />
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 4: Urine Test -->
+        <section class="form-section">
+          <h2 class="section-title">Urinalysis</h2>
+          <div class="field-grid">
+
+            <div class="field">
+              <label for="urine_protein">
+                Urine protein
+                <span class="tooltip" title="Dipstick result: 1=Negative, 2=Trace, 3=(+1), 4=(+2), 5=(+3), 6=(+4)">ⓘ</span>
+              </label>
+              <select id="urine_protein" name="urine_protein" required>
+                <option value="" disabled selected>Select…</option>
+                <option value="1">1 — Negative</option>
+                <option value="2">2 — Trace</option>
+                <option value="3">3 — +1</option>
+                <option value="4">4 — +2</option>
+                <option value="5">5 — +3</option>
+                <option value="6">6 — +4</option>
+              </select>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 5: Optional Lab Values -->
+        <section class="form-section collapsible">
+          <button type="button" class="section-toggle" aria-expanded="false">
+            <h2 class="section-title">
+              Additional Lab Values
+              <span class="optional-badge">Optional</span>
+            </h2>
+            <span class="toggle-icon">▸</span>
+          </button>
+          <div class="collapsible-content" hidden>
+            <p class="section-hint">
+              Including these values improves prediction accuracy but is not required.
+            </p>
+            <div class="field-grid">
+
+              <div class="field">
+                <label for="hemoglobin">Hemoglobin <span class="unit">(g/dL)</span></label>
+                <input type="number" id="hemoglobin" name="hemoglobin" min="3" max="25"
+                       step="0.1" placeholder="e.g. 14.2" />
+              </div>
+
+              <div class="field">
+                <label for="serum_creatinine">Serum creatinine <span class="unit">(mg/dL)</span></label>
+                <input type="number" id="serum_creatinine" name="serum_creatinine"
+                       min="0.1" max="30" step="0.01" placeholder="e.g. 0.9" />
+              </div>
+
+              <div class="field">
+                <label for="ast">AST (GOT) <span class="unit">(U/L)</span></label>
+                <input type="number" id="ast" name="ast" min="1" max="5000"
+                       placeholder="e.g. 25" />
+              </div>
+
+              <div class="field">
+                <label for="alt">ALT (GPT) <span class="unit">(U/L)</span></label>
+                <input type="number" id="alt" name="alt" min="1" max="5000"
+                       placeholder="e.g. 22" />
+              </div>
+
+              <div class="field">
+                <label for="ggt">GGT (γ-GTP) <span class="unit">(U/L)</span></label>
+                <input type="number" id="ggt" name="ggt" min="1" max="5000"
+                       placeholder="e.g. 30" />
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Lipid Panel -->
+        <section class="form-section collapsible">
+          <button type="button" class="section-toggle" aria-expanded="false">
+            <h2 class="section-title">
+              Lipid Panel
+              <span class="optional-badge">Optional — ~34% of check-ups include this</span>
+            </h2>
+            <span class="toggle-icon">▸</span>
+          </button>
+          <div class="collapsible-content" hidden>
+            <p class="section-hint">
+              The model handles missing lipid values gracefully — it was trained on data where
+              approximately 66% of records had no lipid panel results.
+            </p>
+            <div class="field-grid">
+
+              <div class="field">
+                <label for="total_cholesterol">Total cholesterol <span class="unit">(mg/dL)</span></label>
+                <input type="number" id="total_cholesterol" name="total_cholesterol"
+                       min="50" max="1000" placeholder="e.g. 195" />
+              </div>
+
+              <div class="field">
+                <label for="triglycerides">Triglycerides <span class="unit">(mg/dL)</span></label>
+                <input type="number" id="triglycerides" name="triglycerides"
+                       min="10" max="5000" placeholder="e.g. 120" />
+              </div>
+
+              <div class="field">
+                <label for="hdl_cholesterol">HDL cholesterol <span class="unit">(mg/dL)</span></label>
+                <input type="number" id="hdl_cholesterol" name="hdl_cholesterol"
+                       min="5" max="200" placeholder="e.g. 55" />
+              </div>
+
+              <div class="field">
+                <label for="ldl_cholesterol">LDL cholesterol <span class="unit">(mg/dL)</span></label>
+                <input type="number" id="ldl_cholesterol" name="ldl_cholesterol"
+                       min="5" max="700" placeholder="e.g. 115" />
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn-primary">
+            Calculate risk
+          </button>
+          <button type="button" id="reset-btn" class="btn-secondary">Reset</button>
+        </div>
+
+        <div id="form-error" class="banner-error" hidden></div>
+
+      </form>
+
+      <!-- ── Results Panel ──────────────────────────────────────────────── -->
+      <section id="results-panel" hidden>
+        <div class="results-header">
+          <h2>Screening Result</h2>
+          <button type="button" id="new-assessment-btn" class="btn-secondary btn-sm">
+            New assessment
+          </button>
+        </div>
+
+        <div id="tier-card" class="tier-card">
+          <div class="tier-label-row">
+            <span id="tier-badge" class="tier-badge"></span>
+            <span id="screen-status" class="screen-status"></span>
+          </div>
+          <p id="probability-display" class="probability-display"></p>
+          <p id="recommendation-text" class="recommendation-text"></p>
+        </div>
+
+        <div id="no-labs-warning" class="banner-warning" hidden>
+          <strong>⚠ No laboratory values were provided.</strong>
+          This model is significantly less accurate without lab data. Missing lab values
+          are treated as a signal in themselves — learned from patients in the training
+          data who skipped those tests — and can <em>underestimate</em> risk even when
+          anthropometric factors (BMI, waist circumference) suggest otherwise.
+          For a meaningful result, please provide at least hemoglobin, serum creatinine,
+          and one liver enzyme (AST, ALT, or GGT).
+        </div>
+
+        <div class="chart-card">
+          <h3>Why this result?</h3>
+          <p class="chart-hint">
+            The chart below shows which of your measurements most influenced this prediction.
+            Red bars increased your risk score; blue bars decreased it.
+            Values are shown on a log-odds scale used internally by the model.
+          </p>
+          <div id="waterfall-chart"></div>
+        </div>
+
+        <div class="disclaimer banner-info" style="margin-top: 1.5rem;">
+          SHAP values reflect the contribution of each input to the model's raw score,
+          not to the final probability directly. Calibrated probability is derived from
+          the CatBoost model's raw output via Platt scaling.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── About Tab ──────────────────────────────────────────────────────── -->
+  <main id="tab-about" class="tab-content" hidden>
+    <div class="page-inner">
+
+      <article class="about-article">
+
+        <h2>Background</h2>
+        <p>
+          Type 2 diabetes is a significant and growing health burden in South Korea.
+          A substantial proportion of people living with T2D are unaware of their diagnosis
+          because the condition develops gradually and is often asymptomatic in its early stages.
+          Early identification allows for lifestyle interventions that can delay or prevent
+          progression to overt diabetes.
+        </p>
+
+        <h2>Data</h2>
+        <p>
+          This model was trained on the
+          <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener">
+            Korean National Health Insurance Service (NHIS) General Health Examination dataset
+          </a>
+          — one million randomly selected adult subscribers who received a health check-up
+          in 2024. The dataset is representative of the general insured adult population
+          in South Korea.
+        </p>
+        <p>
+          Fasting plasma glucose (FPG) was used to construct the binary label: records with
+          FPG ≥ 126 mg/dL were labelled as likely undiagnosed T2D. Patients whose records
+          were flagged as likely <em>known</em> diabetics (on treatment) were not removed,
+          as the NHIS dataset does not include treatment history; this is a known limitation.
+        </p>
+        <p>
+          Crucially, <strong>FPG itself was excluded from all model features</strong>.
+          Because FPG directly measures blood glucose, including it would make the model
+          nearly circular — essentially just applying a threshold to the answer it is
+          supposed to predict. Instead, the model learns from indirect metabolic indicators:
+          body composition, blood pressure, kidney function, liver enzymes, and lipid levels.
+          This defines the tool's intended role: <em>identify which patients are likely
+          to benefit from a fasting glucose test</em>, not to replace one. A positive
+          screen should prompt an FPG or HbA1c measurement for confirmation.
+        </p>
+
+        <h2>Model</h2>
+        <p>
+          A <strong>CatBoost gradient-boosted decision tree</strong> was selected after
+          comparing against a PyTorch tabular network and an sklearn MLP classifier.
+          CatBoost was chosen for its strong performance, native support for categorical
+          features without preprocessing, built-in missing-value handling, and CPU efficiency —
+          making it practical to deploy without GPU infrastructure.
+        </p>
+        <p>
+          Raw model probabilities were calibrated using Platt scaling (logistic regression
+          on validation-set logits). The screening threshold was selected to achieve a
+          sensitivity (recall) of at least <strong>85%</strong> on the validation set,
+          reflecting the asymmetric cost of a missed case versus a false positive in a
+          population screening context.
+        </p>
+
+        <h2>Performance (test set)</h2>
+        <table class="metrics-table">
+          <thead>
+            <tr><th>Metric</th><th>Value</th></tr>
+          </thead>
+          <tbody id="metrics-table-body">
+            <tr><td>ROC-AUC</td><td id="metric-roc">—</td></tr>
+            <tr><td>Average precision</td><td id="metric-ap">—</td></tr>
+            <tr><td>Brier score</td><td id="metric-brier">—</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Feature importance</h2>
+        <p>
+          The chart below shows the mean absolute SHAP value for each feature across a
+          5,000-row sample of the held-out test set — a measure of how much, on average,
+          each feature contributes to the model's predictions.
+        </p>
+        <div id="global-importance-chart"></div>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li>
+            The model identifies statistical risk patterns and does not diagnose diabetes.
+            A fasting plasma glucose test or HbA1c measurement is required for diagnosis.
+          </li>
+          <li>
+            Training data is from South Korea (2024 cohort). Generalisability to other
+            populations may be limited.
+          </li>
+          <li>
+            In the NHIS dataset, laboratory tests (hemoglobin, creatinine, liver enzymes,
+            lipids) were ordered at a clinician's discretion, so patients who had them
+            measured tended to be sicker on average. The model learned this pattern:
+            absent lab values act as a weak signal of lower risk. As a result,
+            <strong>predictions without any laboratory input may substantially
+            underestimate risk</strong> in patients who simply haven't been tested.
+          </li>
+          <li>
+            The FPG-based label does not distinguish between newly detected and previously
+            known (but poorly controlled) diabetes.
+          </li>
+          <li>
+            This is a research portfolio project and has not been clinically validated.
+          </li>
+        </ul>
+
+        <h2>Source code</h2>
+        <p>
+          All code, training scripts, and the analysis notebook are available on
+          <a href="https://github.com/tjohns94" target="_blank" rel="noopener">GitHub</a>.
+        </p>
+
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      Built by Tyson Johnson · George Mason University, Computational &amp; Data Sciences ·
+      Data: <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener">Korean NHIS 2024</a>
+    </p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
