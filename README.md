@@ -4,6 +4,8 @@ A clinical screening tool for undiagnosed Type 2 Diabetes, trained on the Korean
 
 End-to-end portfolio project demonstrating: public-dataset ingestion, class-imbalanced modelling, probability calibration, per-prediction explainability, and a FastAPI + JavaScript serving layer — packaged so that anyone can reproduce the headline metrics from a single notebook.
 
+**Live demo (English/Korean):** https://tysonjohnson.dev/t2d/ · **Write-up:** https://tysonjohnson.dev/en/projects/t2d.html
+
 ---
 
 ## Quick verification
@@ -144,7 +146,7 @@ Full discussion: [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Tyson Johnson**
 B.S. Computational and Data Sciences, George Mason University
-Solo project, CDS 403 portfolio, spring 2026.
-[GitHub](https://github.com/tjohns94)
+Team lead of a 4-person CDS 403 course project, spring 2026; I built the data pipeline, model, and deployment.
+[GitHub](https://github.com/tysonjohnsondev)
 
 Dataset: [Korean NHIS 2024 General Health Examination](https://www.data.go.kr/en/data/15007122/fileData.do)

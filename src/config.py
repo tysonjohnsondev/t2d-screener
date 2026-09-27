@@ -17,7 +17,7 @@ MODELS_DIR: Path = ROOT_DIR / "models"
 
 DATA_ENCODING: str = "cp949"
 GH_URL: str = (
-    "https://github.com/tjohns94/cds492-3c-project/raw/refs/heads/main/data/health_2024.CSV"
+    "https://github.com/tysonjohnsondev/cds492-3c-project/raw/refs/heads/main/data/health_2024.CSV"
 )
 
 # ---------------------------------------------------------------------------

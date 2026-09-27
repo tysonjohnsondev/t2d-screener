@@ -95,6 +95,6 @@ CatBoost and the PyTorch Tabular Net are effectively tied on ROC-AUC. **CatBoost
 
 ## Author, License, Date
 
-- **Author.** Tyson Johnson — B.S. Computational and Data Sciences, George Mason University (solo project, CDS 403, spring 2026).
+- **Author.** Tyson Johnson — B.S. Computational and Data Sciences, George Mason University (team lead of a 4-person CDS 403 course project, spring 2026; built the data pipeline, model, and deployment).
 - **License.** MIT (see `LICENSE` in the repo root once added).
 - **Last updated.** April 2026.

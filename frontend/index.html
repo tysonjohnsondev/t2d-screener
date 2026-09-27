@@ -4,25 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>T2D Risk Screener</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="static/style.css?v=4" />
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 </head>
 <body>
-
   <!-- ── Header ─────────────────────────────────────────────────────────── -->
   <header>
+    <a href="/" class="back-link" data-i18n="back_link">&larr; Portfolio</a>
     <div class="header-inner">
       <div class="header-title">
         <span class="header-icon">⚕</span>
         <div>
-          <h1>T2D Risk Screener</h1>
-          <p class="header-sub">Undiagnosed Type 2 Diabetes · Korean NHIS Data</p>
+          <h1 data-i18n="app_title">T2D Risk Screener</h1>
+          <p class="header-sub" data-i18n="app_subtitle">Undiagnosed Type 2 Diabetes · Korean NHIS Data</p>
         </div>
       </div>
-      <nav class="header-nav">
-        <button class="nav-btn active" data-tab="screener">Screening Tool</button>
-        <button class="nav-btn" data-tab="about">About the Model</button>
-      </nav>
+      <div class="header-controls">
+        <nav class="header-nav">
+          <button class="nav-btn active" data-tab="screener" data-i18n="tab_screener">Screening Tool</button>
+          <button class="nav-btn" data-tab="about" data-i18n="tab_about">About the Model</button>
+        </nav>
+        <div class="lang-switch" data-lang="en" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ko">한국어</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -31,49 +37,49 @@
     <div class="page-inner">
 
       <div class="disclaimer banner-info">
-        <strong>Screening tool only.</strong>
-        This tool does not provide a diagnosis and is not a substitute for professional
+        <strong data-i18n="disclaimer_lead">Screening tool only.</strong>
+        <span data-i18n="disclaimer_body">This tool does not provide a diagnosis and is not a substitute for professional
         medical advice. Results are based on statistical patterns in Korean population data
-        and are intended to support, not replace, clinical judgement.
+        and are intended to support, not replace, clinical judgement.</span>
       </div>
 
       <form id="screening-form" novalidate>
 
         <!-- Section 1: Basic Information -->
         <section class="form-section">
-          <h2 class="section-title">Basic Information</h2>
+          <h2 class="section-title" data-i18n="sec_basic">Basic Information</h2>
           <div class="field-grid">
 
             <div class="field">
-              <label for="age">Age <span class="unit">(years)</span></label>
-              <input type="number" id="age" name="age" min="20" max="90" placeholder="e.g. 45" required />
+              <label for="age"><span data-i18n="lbl_age">Age</span> <span class="unit" data-i18n="unit_years">(years)</span></label>
+              <input type="number" id="age" name="age" min="20" max="90" placeholder="45" required />
             </div>
 
             <div class="field">
-              <label for="sex_code">Sex</label>
+              <label for="sex_code" data-i18n="lbl_sex">Sex</label>
               <select id="sex_code" name="sex_code" required>
-                <option value="" disabled selected>Select…</option>
-                <option value="1">Male</option>
-                <option value="2">Female</option>
+                <option value="" disabled selected data-i18n="opt_select">Select…</option>
+                <option value="1" data-i18n="opt_male">Male</option>
+                <option value="2" data-i18n="opt_female">Female</option>
               </select>
             </div>
 
             <div class="field">
-              <label for="smoking_status">Smoking status</label>
+              <label for="smoking_status" data-i18n="lbl_smoking">Smoking status</label>
               <select id="smoking_status" name="smoking_status" required>
-                <option value="" disabled selected>Select…</option>
-                <option value="1">Never smoked</option>
-                <option value="2">Former smoker</option>
-                <option value="3">Current smoker</option>
+                <option value="" disabled selected data-i18n="opt_select">Select…</option>
+                <option value="1" data-i18n="opt_smoke_never">Never smoked</option>
+                <option value="2" data-i18n="opt_smoke_former">Former smoker</option>
+                <option value="3" data-i18n="opt_smoke_current">Current smoker</option>
               </select>
             </div>
 
             <div class="field">
-              <label for="alcohol_consumption">Alcohol consumption</label>
+              <label for="alcohol_consumption" data-i18n="lbl_alcohol">Alcohol consumption</label>
               <select id="alcohol_consumption" name="alcohol_consumption" required>
-                <option value="" disabled selected>Select…</option>
-                <option value="0">No</option>
-                <option value="1">Yes</option>
+                <option value="" disabled selected data-i18n="opt_select">Select…</option>
+                <option value="0" data-i18n="opt_no">No</option>
+                <option value="1" data-i18n="opt_yes">Yes</option>
               </select>
             </div>
 
@@ -82,28 +88,28 @@
 
         <!-- Section 2: Body Measurements -->
         <section class="form-section">
-          <h2 class="section-title">Body Measurements</h2>
+          <h2 class="section-title" data-i18n="sec_body">Body Measurements</h2>
           <div class="field-grid">
 
             <div class="field">
-              <label for="height_cm">Height <span class="unit">(cm)</span></label>
+              <label for="height_cm"><span data-i18n="lbl_height">Height</span> <span class="unit">(cm)</span></label>
               <input type="number" id="height_cm" name="height_cm" min="100" max="230"
-                     step="0.1" placeholder="e.g. 170" required />
+                     step="0.1" placeholder="170" required />
             </div>
 
             <div class="field">
-              <label for="weight_kg">Weight <span class="unit">(kg)</span></label>
+              <label for="weight_kg"><span data-i18n="lbl_weight">Weight</span> <span class="unit">(kg)</span></label>
               <input type="number" id="weight_kg" name="weight_kg" min="20" max="250"
-                     step="0.1" placeholder="e.g. 72" required />
+                     step="0.1" placeholder="72" required />
             </div>
 
             <div class="field">
               <label for="waist_cm">
-                Waist circumference <span class="unit">(cm)</span>
-                <span class="tooltip" title="Measure at the midpoint between the lowest rib and the top of the hip bone.">ⓘ</span>
+                <span data-i18n="lbl_waist">Waist circumference</span> <span class="unit">(cm)</span>
+                <span class="tooltip" data-i18n-title="tip_waist" title="Measure at the midpoint between the lowest rib and the top of the hip bone.">ⓘ</span>
               </label>
               <input type="number" id="waist_cm" name="waist_cm" min="30" max="250"
-                     step="0.1" placeholder="e.g. 84" required />
+                     step="0.1" placeholder="84" required />
             </div>
 
           </div>
@@ -111,19 +117,19 @@
 
         <!-- Section 3: Blood Pressure -->
         <section class="form-section">
-          <h2 class="section-title">Blood Pressure</h2>
+          <h2 class="section-title" data-i18n="sec_bp">Blood Pressure</h2>
           <div class="field-grid">
 
             <div class="field">
-              <label for="systolic_bp">Systolic <span class="unit">(mmHg)</span></label>
+              <label for="systolic_bp"><span data-i18n="lbl_systolic">Systolic</span> <span class="unit">(mmHg)</span></label>
               <input type="number" id="systolic_bp" name="systolic_bp" min="60" max="300"
-                     placeholder="e.g. 122" required />
+                     placeholder="122" required />
             </div>
 
             <div class="field">
-              <label for="diastolic_bp">Diastolic <span class="unit">(mmHg)</span></label>
+              <label for="diastolic_bp"><span data-i18n="lbl_diastolic">Diastolic</span> <span class="unit">(mmHg)</span></label>
               <input type="number" id="diastolic_bp" name="diastolic_bp" min="30" max="200"
-                     placeholder="e.g. 78" required />
+                     placeholder="78" required />
             </div>
 
           </div>
@@ -131,22 +137,22 @@
 
         <!-- Section 4: Urine Test -->
         <section class="form-section">
-          <h2 class="section-title">Urinalysis</h2>
+          <h2 class="section-title" data-i18n="sec_urine">Urinalysis</h2>
           <div class="field-grid">
 
             <div class="field">
               <label for="urine_protein">
-                Urine protein
-                <span class="tooltip" title="Dipstick result: 1=Negative, 2=Trace, 3=(+1), 4=(+2), 5=(+3), 6=(+4)">ⓘ</span>
+                <span data-i18n="lbl_urine_protein">Urine protein</span>
+                <span class="tooltip" data-i18n-title="tip_urine" title="Dipstick result: 1=Negative, 2=Trace, 3=(+1), 4=(+2), 5=(+3), 6=(+4)">ⓘ</span>
               </label>
               <select id="urine_protein" name="urine_protein" required>
-                <option value="" disabled selected>Select…</option>
-                <option value="1">1 — Negative</option>
-                <option value="2">2 — Trace</option>
-                <option value="3">3 — +1</option>
-                <option value="4">4 — +2</option>
-                <option value="5">5 — +3</option>
-                <option value="6">6 — +4</option>
+                <option value="" disabled selected data-i18n="opt_select">Select…</option>
+                <option value="1" data-i18n="opt_urine_1">1 — Negative</option>
+                <option value="2" data-i18n="opt_urine_2">2 — Trace</option>
+                <option value="3" data-i18n="opt_urine_3">3 — +1</option>
+                <option value="4" data-i18n="opt_urine_4">4 — +2</option>
+                <option value="5" data-i18n="opt_urine_5">5 — +3</option>
+                <option value="6" data-i18n="opt_urine_6">6 — +4</option>
               </select>
             </div>
 
@@ -157,45 +163,45 @@
         <section class="form-section collapsible">
           <button type="button" class="section-toggle" aria-expanded="false">
             <h2 class="section-title">
-              Additional Lab Values
-              <span class="optional-badge">Optional</span>
+              <span data-i18n="sec_labs">Additional Lab Values</span>
+              <span class="optional-badge" data-i18n="badge_optional">Optional</span>
             </h2>
             <span class="toggle-icon">▸</span>
           </button>
           <div class="collapsible-content" hidden>
-            <p class="section-hint">
+            <p class="section-hint" data-i18n="hint_labs">
               Including these values improves prediction accuracy but is not required.
             </p>
             <div class="field-grid">
 
               <div class="field">
-                <label for="hemoglobin">Hemoglobin <span class="unit">(g/dL)</span></label>
+                <label for="hemoglobin"><span data-i18n="lbl_hemoglobin">Hemoglobin</span> <span class="unit">(g/dL)</span></label>
                 <input type="number" id="hemoglobin" name="hemoglobin" min="3" max="25"
-                       step="0.1" placeholder="e.g. 14.2" />
+                       step="0.1" placeholder="14.2" />
               </div>
 
               <div class="field">
-                <label for="serum_creatinine">Serum creatinine <span class="unit">(mg/dL)</span></label>
+                <label for="serum_creatinine"><span data-i18n="lbl_creatinine">Serum creatinine</span> <span class="unit">(mg/dL)</span></label>
                 <input type="number" id="serum_creatinine" name="serum_creatinine"
-                       min="0.1" max="30" step="0.01" placeholder="e.g. 0.9" />
+                       min="0.1" max="30" step="0.01" placeholder="0.9" />
               </div>
 
               <div class="field">
-                <label for="ast">AST (GOT) <span class="unit">(U/L)</span></label>
+                <label for="ast"><span data-i18n="lbl_ast">AST (GOT)</span> <span class="unit">(U/L)</span></label>
                 <input type="number" id="ast" name="ast" min="1" max="5000"
-                       placeholder="e.g. 25" />
+                       placeholder="25" />
               </div>
 
               <div class="field">
-                <label for="alt">ALT (GPT) <span class="unit">(U/L)</span></label>
+                <label for="alt"><span data-i18n="lbl_alt">ALT (GPT)</span> <span class="unit">(U/L)</span></label>
                 <input type="number" id="alt" name="alt" min="1" max="5000"
-                       placeholder="e.g. 22" />
+                       placeholder="22" />
               </div>
 
               <div class="field">
-                <label for="ggt">GGT (γ-GTP) <span class="unit">(U/L)</span></label>
+                <label for="ggt"><span data-i18n="lbl_ggt">GGT (γ-GTP)</span> <span class="unit">(U/L)</span></label>
                 <input type="number" id="ggt" name="ggt" min="1" max="5000"
-                       placeholder="e.g. 30" />
+                       placeholder="30" />
               </div>
 
             </div>
@@ -206,40 +212,40 @@
         <section class="form-section collapsible">
           <button type="button" class="section-toggle" aria-expanded="false">
             <h2 class="section-title">
-              Lipid Panel
-              <span class="optional-badge">Optional — ~34% of check-ups include this</span>
+              <span data-i18n="sec_lipids">Lipid Panel</span>
+              <span class="optional-badge" data-i18n="badge_lipids">Optional — ~34% of check-ups include this</span>
             </h2>
             <span class="toggle-icon">▸</span>
           </button>
           <div class="collapsible-content" hidden>
-            <p class="section-hint">
+            <p class="section-hint" data-i18n="hint_lipids">
               The model handles missing lipid values gracefully — it was trained on data where
               approximately 66% of records had no lipid panel results.
             </p>
             <div class="field-grid">
 
               <div class="field">
-                <label for="total_cholesterol">Total cholesterol <span class="unit">(mg/dL)</span></label>
+                <label for="total_cholesterol"><span data-i18n="lbl_total_chol">Total cholesterol</span> <span class="unit">(mg/dL)</span></label>
                 <input type="number" id="total_cholesterol" name="total_cholesterol"
-                       min="50" max="1000" placeholder="e.g. 195" />
+                       min="50" max="1000" placeholder="195" />
               </div>
 
               <div class="field">
-                <label for="triglycerides">Triglycerides <span class="unit">(mg/dL)</span></label>
+                <label for="triglycerides"><span data-i18n="lbl_triglycerides">Triglycerides</span> <span class="unit">(mg/dL)</span></label>
                 <input type="number" id="triglycerides" name="triglycerides"
-                       min="10" max="5000" placeholder="e.g. 120" />
+                       min="10" max="5000" placeholder="120" />
               </div>
 
               <div class="field">
-                <label for="hdl_cholesterol">HDL cholesterol <span class="unit">(mg/dL)</span></label>
+                <label for="hdl_cholesterol"><span data-i18n="lbl_hdl">HDL cholesterol</span> <span class="unit">(mg/dL)</span></label>
                 <input type="number" id="hdl_cholesterol" name="hdl_cholesterol"
-                       min="5" max="200" placeholder="e.g. 55" />
+                       min="5" max="200" placeholder="55" />
               </div>
 
               <div class="field">
-                <label for="ldl_cholesterol">LDL cholesterol <span class="unit">(mg/dL)</span></label>
+                <label for="ldl_cholesterol"><span data-i18n="lbl_ldl">LDL cholesterol</span> <span class="unit">(mg/dL)</span></label>
                 <input type="number" id="ldl_cholesterol" name="ldl_cholesterol"
-                       min="5" max="700" placeholder="e.g. 115" />
+                       min="5" max="700" placeholder="115" />
               </div>
 
             </div>
@@ -247,10 +253,10 @@
         </section>
 
         <div class="form-actions">
-          <button type="submit" id="submit-btn" class="btn-primary">
+          <button type="submit" id="submit-btn" class="btn-primary" data-i18n="btn_calculate">
             Calculate risk
           </button>
-          <button type="button" id="reset-btn" class="btn-secondary">Reset</button>
+          <button type="button" id="reset-btn" class="btn-secondary" data-i18n="btn_reset">Reset</button>
         </div>
 
         <div id="form-error" class="banner-error" hidden></div>
@@ -260,8 +266,8 @@
       <!-- ── Results Panel ──────────────────────────────────────────────── -->
       <section id="results-panel" hidden>
         <div class="results-header">
-          <h2>Screening Result</h2>
-          <button type="button" id="new-assessment-btn" class="btn-secondary btn-sm">
+          <h2 data-i18n="results_title">Screening Result</h2>
+          <button type="button" id="new-assessment-btn" class="btn-secondary btn-sm" data-i18n="btn_new">
             New assessment
           </button>
         </div>
@@ -276,18 +282,18 @@
         </div>
 
         <div id="no-labs-warning" class="banner-warning" hidden>
-          <strong>⚠ No laboratory values were provided.</strong>
-          This model is significantly less accurate without lab data. Missing lab values
+          <strong data-i18n="nolabs_lead">⚠ No laboratory values were provided.</strong>
+          <span data-i18n="nolabs_body">This model is significantly less accurate without lab data. Missing lab values
           are treated as a signal in themselves — learned from patients in the training
-          data who skipped those tests — and can <em>underestimate</em> risk even when
+          data who skipped those tests — and can underestimate risk even when
           anthropometric factors (BMI, waist circumference) suggest otherwise.
           For a meaningful result, please provide at least hemoglobin, serum creatinine,
-          and one liver enzyme (AST, ALT, or GGT).
+          and one liver enzyme (AST, ALT, or GGT).</span>
         </div>
 
         <div class="chart-card">
-          <h3>Why this result?</h3>
-          <p class="chart-hint">
+          <h3 data-i18n="why_title">Why this result?</h3>
+          <p class="chart-hint" data-i18n="why_hint">
             The chart below shows which of your measurements most influenced this prediction.
             Red bars increased your risk score; blue bars decreased it.
             Values are shown on a log-odds scale used internally by the model.
@@ -295,7 +301,7 @@
           <div id="waterfall-chart"></div>
         </div>
 
-        <div class="disclaimer banner-info" style="margin-top: 1.5rem;">
+        <div class="disclaimer banner-info" style="margin-top: 1.5rem;" data-i18n="shap_note">
           SHAP values reflect the contribution of each input to the model's raw score,
           not to the final probability directly. Calibrated probability is derived from
           the CatBoost model's raw output via Platt scaling.
@@ -311,8 +317,8 @@
 
       <article class="about-article">
 
-        <h2>Background</h2>
-        <p>
+        <h2 data-i18n="about_h_background">Background</h2>
+        <p data-i18n="about_p_background">
           Type 2 diabetes is a significant and growing health burden in South Korea.
           A substantial proportion of people living with T2D are unaware of their diagnosis
           because the condition develops gradually and is often asymptomatic in its early stages.
@@ -320,100 +326,99 @@
           progression to overt diabetes.
         </p>
 
-        <h2>Data</h2>
+        <h2 data-i18n="about_h_data">Data</h2>
         <p>
-          This model was trained on the
-          <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener">
+          <span data-i18n="about_p_data1_pre">This model was trained on the</span>
+          <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener" data-i18n="about_p_data1_link">
             Korean National Health Insurance Service (NHIS) General Health Examination dataset
-          </a>
-          — one million randomly selected adult subscribers who received a health check-up
+          </a><span data-i18n="about_p_data1_post"> — one million randomly selected adult subscribers who received a health check-up
           in 2024. The dataset is representative of the general insured adult population
-          in South Korea.
+          in South Korea.</span>
         </p>
-        <p>
+        <p data-i18n="about_p_data2">
           Fasting plasma glucose (FPG) was used to construct the binary label: records with
           FPG ≥ 126 mg/dL were labelled as likely undiagnosed T2D. Patients whose records
-          were flagged as likely <em>known</em> diabetics (on treatment) were not removed,
+          were flagged as likely known diabetics (on treatment) were not removed,
           as the NHIS dataset does not include treatment history; this is a known limitation.
         </p>
-        <p>
-          Crucially, <strong>FPG itself was excluded from all model features</strong>.
+        <p data-i18n="about_p_data3">
+          Crucially, FPG itself was excluded from all model features.
           Because FPG directly measures blood glucose, including it would make the model
           nearly circular — essentially just applying a threshold to the answer it is
           supposed to predict. Instead, the model learns from indirect metabolic indicators:
           body composition, blood pressure, kidney function, liver enzymes, and lipid levels.
-          This defines the tool's intended role: <em>identify which patients are likely
-          to benefit from a fasting glucose test</em>, not to replace one. A positive
+          This defines the tool's intended role: identify which patients are likely
+          to benefit from a fasting glucose test, not to replace one. A positive
           screen should prompt an FPG or HbA1c measurement for confirmation.
         </p>
 
-        <h2>Model</h2>
-        <p>
-          A <strong>CatBoost gradient-boosted decision tree</strong> was selected after
+        <h2 data-i18n="about_h_model">Model</h2>
+        <p data-i18n="about_p_model1">
+          A CatBoost gradient-boosted decision tree was selected after
           comparing against a PyTorch tabular network and an sklearn MLP classifier.
           CatBoost was chosen for its strong performance, native support for categorical
           features without preprocessing, built-in missing-value handling, and CPU efficiency —
           making it practical to deploy without GPU infrastructure.
         </p>
-        <p>
+        <p data-i18n="about_p_model2">
           Raw model probabilities were calibrated using Platt scaling (logistic regression
           on validation-set logits). The screening threshold was selected to achieve a
-          sensitivity (recall) of at least <strong>85%</strong> on the validation set,
+          sensitivity (recall) of at least 85% on the validation set,
           reflecting the asymmetric cost of a missed case versus a false positive in a
           population screening context.
         </p>
 
-        <h2>Performance (test set)</h2>
+        <h2 data-i18n="about_h_perf">Performance (test set)</h2>
         <table class="metrics-table">
           <thead>
-            <tr><th>Metric</th><th>Value</th></tr>
+            <tr><th data-i18n="metric_col_metric">Metric</th><th data-i18n="metric_col_value">Value</th></tr>
           </thead>
           <tbody id="metrics-table-body">
             <tr><td>ROC-AUC</td><td id="metric-roc">—</td></tr>
-            <tr><td>Average precision</td><td id="metric-ap">—</td></tr>
-            <tr><td>Brier score</td><td id="metric-brier">—</td></tr>
+            <tr><td data-i18n="metric_ap">Average precision</td><td id="metric-ap">—</td></tr>
+            <tr><td data-i18n="metric_brier">Brier score</td><td id="metric-brier">—</td></tr>
           </tbody>
         </table>
 
-        <h2>Feature importance</h2>
-        <p>
+        <h2 data-i18n="about_h_importance">Feature importance</h2>
+        <p data-i18n="about_p_importance">
           The chart below shows the mean absolute SHAP value for each feature across a
           5,000-row sample of the held-out test set — a measure of how much, on average,
           each feature contributes to the model's predictions.
         </p>
         <div id="global-importance-chart"></div>
 
-        <h2>Limitations</h2>
+        <h2 data-i18n="about_h_limits">Limitations</h2>
         <ul>
-          <li>
+          <li data-i18n="about_li_1">
             The model identifies statistical risk patterns and does not diagnose diabetes.
             A fasting plasma glucose test or HbA1c measurement is required for diagnosis.
           </li>
-          <li>
+          <li data-i18n="about_li_2">
             Training data is from South Korea (2024 cohort). Generalisability to other
             populations may be limited.
           </li>
-          <li>
+          <li data-i18n="about_li_3">
             In the NHIS dataset, laboratory tests (hemoglobin, creatinine, liver enzymes,
             lipids) were ordered at a clinician's discretion, so patients who had them
             measured tended to be sicker on average. The model learned this pattern:
             absent lab values act as a weak signal of lower risk. As a result,
-            <strong>predictions without any laboratory input may substantially
-            underestimate risk</strong> in patients who simply haven't been tested.
+            predictions without any laboratory input may substantially
+            underestimate risk in patients who simply haven't been tested.
           </li>
-          <li>
+          <li data-i18n="about_li_4">
             The FPG-based label does not distinguish between newly detected and previously
             known (but poorly controlled) diabetes.
           </li>
-          <li>
+          <li data-i18n="about_li_5">
             This is a research portfolio project and has not been clinically validated.
           </li>
         </ul>
 
-        <h2>Source code</h2>
+        <h2 data-i18n="about_h_source">Source code</h2>
         <p>
-          All code, training scripts, and the analysis notebook are available on
-          <a href="https://github.com/tjohns94" target="_blank" rel="noopener">GitHub</a>.
+          <span data-i18n="about_p_source_pre">All code, training scripts, and the analysis notebook are available on</span>
+          <a href="https://github.com/tysonjohnsondev/t2d-screener" target="_blank" rel="noopener">GitHub</a><span data-i18n="about_p_source_post">.</span>
         </p>
 
       </article>
@@ -423,11 +428,12 @@
 
   <footer>
     <p>
-      Built by Tyson Johnson · George Mason University, Computational &amp; Data Sciences ·
-      Data: <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener">Korean NHIS 2024</a>
+      <span data-i18n="footer_pre">Built by Tyson Johnson · George Mason University, Computational &amp; Data Sciences ·
+      Data:</span>
+      <a href="https://www.data.go.kr/en/data/15007122/fileData.do" target="_blank" rel="noopener" data-i18n="footer_data">Korean NHIS 2024</a>
     </p>
   </footer>
 
-  <script src="/static/app.js"></script>
+  <script src="static/app.js?v=4"></script>
 </body>
 </html>
